@@ -1,7 +1,10 @@
 package ru.jabki.filmplus.exception;
 
-public class FilmException extends RuntimeException{
+import java.util.function.Supplier;
+
+public class FilmException extends RuntimeException {
     public FilmException(String message) {
         super(message);
     }
+
 }

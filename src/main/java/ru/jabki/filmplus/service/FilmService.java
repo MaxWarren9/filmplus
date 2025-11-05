@@ -1,6 +1,7 @@
 package ru.jabki.filmplus.service;
 
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 import ru.jabki.filmplus.enums.Genre;
 import ru.jabki.filmplus.exception.FilmException;
 import ru.jabki.filmplus.model.Film;
@@ -14,30 +15,28 @@ public class FilmService {
     private static final HashSet<Film> films = new HashSet<>();
 
     public Film create(final Film film) {
+        validate(film);
         film.setId(films.size() + 1);
         films.add(film);
         return film;
     }
 
     public Film getFilmById(final long id) {
-        final Film film = films.
+        return films.
                 stream().
                 filter(u -> u.getId() == id).
                 findFirst().
-                orElse(null);
-        if (film == null) {
-            throw new FilmException("Film not found");
-        }
-        return film;
+                orElseThrow(() -> new FilmException("Film not found"));
     }
 
     public Film update(final Film film) {
+        validate(film);
         final Film existFilm = getFilmById(film.getId());
-        existFilm.setFilmName(film.getFilmName());
-        existFilm.setFilmDescription(film.getFilmDescription());
-        existFilm.setFilmReleaseDate(film.getFilmReleaseDate());
-        existFilm.setFilmDuration(film.getFilmDuration());
-        existFilm.setFilmGenres(film.getFilmGenres());
+        existFilm.setName(film.getName());
+        existFilm.setDescription(film.getDescription());
+        existFilm.setReleaseDate(film.getReleaseDate());
+        existFilm.setDuration(film.getDuration());
+        existFilm.setGenres(film.getGenres());
         return film;
     }
 
@@ -47,9 +46,31 @@ public class FilmService {
 
     public List<Film> findByNameAndGenre(String name, Set<Genre> genres) {
         return films.stream()
-                .filter(film -> (name == null || name.isBlank() || film.getFilmName().toLowerCase().contains(name)))
-                .filter(film -> (genres == null || film.getFilmGenres().stream().anyMatch(genres :: contains)))
+                .filter(film -> (name == null || name.isBlank() || film.getName().toLowerCase().contains(name)))
+                .filter(film -> (genres == null || film.getGenres().stream().anyMatch(genres :: contains)))
                 .toList();
+    }
+
+    private void validate(final Film film) {
+        if (film == null) {
+            throw new FilmException("Film is null");
+        }
+        if (!StringUtils.hasText(film.getName())) {
+            throw new FilmException("Film name is empty");
+        }
+        if (!StringUtils.hasText(film.getDescription())) {
+            throw new FilmException("Film description is empty");
+        }
+        if (film.getDuration() == null) {
+            throw new FilmException("Film duration is null");
+        }
+        if (film.getReleaseDate() == null) {
+            throw new FilmException("Film release date is null");
+        }
+        if (film.getGenres().isEmpty()) {
+            throw new FilmException("Film genres are empty");
+        }
+
     }
 
 }

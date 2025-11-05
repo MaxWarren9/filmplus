@@ -1,10 +1,6 @@
 package ru.jabki.filmplus.model;
 
 import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
 import lombok.experimental.FieldDefaults;
 import ru.jabki.filmplus.enums.Genre;
 
@@ -15,18 +11,18 @@ import java.util.Set;
 
 public class Film {
     long id;
-    String filmName;
-    String filmDescription;
-    LocalDate filmReleaseDate;
-    long filmDuration;
-    Set<Genre> filmGenres;
+    String name;
+    String description;
+    LocalDate releaseDate;
+    Long duration;
+    Set<Genre> genres;
 
-    public Film(String filmName, String filmDescription, LocalDate filmReleaseDate, long filmDuration, Set<Genre> filmGenres) {
-        this.filmName = filmName;
-        this.filmDescription = filmDescription;
-        this.filmReleaseDate = filmReleaseDate;
-        this.filmDuration = filmDuration;
-        this.filmGenres = filmGenres;
+    public Film(String name, String description, LocalDate releaseDate, long duration, Set<Genre> genres) {
+        this.name = name;
+        this.description = description;
+        this.releaseDate = releaseDate;
+        this.duration = duration;
+        this.genres = genres;
     }
 
     public long getId() {
@@ -37,43 +33,43 @@ public class Film {
         this.id = id;
     }
 
-    public String getFilmName() {
-        return filmName;
+    public String getName() {
+        return name;
     }
 
-    public void setFilmName(String filmName) {
-        this.filmName = filmName;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public String getFilmDescription() {
-        return filmDescription;
+    public String getDescription() {
+        return description;
     }
 
-    public void setFilmDescription(String filmDescription) {
-        this.filmDescription = filmDescription;
+    public void setDescription(String description) {
+        this.description = description;
     }
 
-    public LocalDate getFilmReleaseDate() {
-        return filmReleaseDate;
+    public LocalDate getReleaseDate() {
+        return releaseDate;
     }
 
-    public void setFilmReleaseDate(LocalDate filmReleaseDate) {
-        this.filmReleaseDate = filmReleaseDate;
+    public void setReleaseDate(LocalDate releaseDate) {
+        this.releaseDate = releaseDate;
     }
 
-    public long getFilmDuration() {
-        return filmDuration;
+    public Long getDuration() {
+        return duration;
     }
 
-    public void setFilmDuration(long filmDuration) {
-        this.filmDuration = filmDuration;
+    public void setDuration(Long duration) {
+        this.duration = duration;
     }
 
-    public Set<Genre> getFilmGenres() {
-        return filmGenres;
+    public Set<Genre> getGenres() {
+        return genres;
     }
 
-    public void setFilmGenres(Set<Genre> filmGenres) {
-        this.filmGenres = filmGenres;
+    public void setGenres(Set<Genre> genres) {
+        this.genres = genres;
     }
 }

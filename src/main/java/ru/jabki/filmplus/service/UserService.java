@@ -19,15 +19,10 @@ public class UserService {
     }
 
     public User getUserById(final Long id) {
-        final User user = users.
-                stream().
-                filter(u -> u.getId() == id).
-                findFirst().
-                orElse(null);
-        if (user == null) {
-            throw new UserException("User not found");
-        }
-        return user;
+        return users.stream()
+                .filter(u -> u.getId() == id)
+                .findFirst()
+                .orElseThrow(() -> new UserException("User not found"));
     }
 
     public User update(final User user) {
