@@ -8,7 +8,6 @@ import java.time.LocalDate;
 import java.util.Set;
 
 @FieldDefaults(level = AccessLevel.PRIVATE)
-
 public class Film {
     long id;
     String name;

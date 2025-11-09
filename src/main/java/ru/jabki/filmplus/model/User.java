@@ -5,7 +5,6 @@ import lombok.experimental.FieldDefaults;
 import java.time.LocalDate;
 
 @FieldDefaults(level = AccessLevel.PRIVATE)
-
 public class User {
     long id;
     String login;

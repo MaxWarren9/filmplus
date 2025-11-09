@@ -22,11 +22,10 @@ public class FilmService {
     }
 
     public Film getFilmById(final long id) {
-        return films.
-                stream().
-                filter(u -> u.getId() == id).
-                findFirst().
-                orElseThrow(() -> new FilmException("Film not found"));
+        return films.stream()
+                .filter(u -> u.getId() == id)
+                .findFirst()
+                .orElseThrow(() -> new FilmException("Film not found"));
     }
 
     public Film update(final Film film) {

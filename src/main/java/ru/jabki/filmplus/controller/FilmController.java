@@ -1,12 +1,14 @@
 package ru.jabki.filmplus.controller;
 
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -24,7 +26,6 @@ import java.util.Set;
 public class FilmController {
     private final FilmService filmService;
 
-
     public FilmController(FilmService filmService) {
         this.filmService = filmService;
     }
@@ -41,7 +42,7 @@ public class FilmController {
         return filmService.getFilmById(id);
     }
 
-    @PatchMapping("/{id}")
+    @PutMapping("/{id}")
     @Operation(summary = "Обновить фильм")
     public Film update (@RequestBody final Film film) {
         return filmService.update(film);
@@ -55,8 +56,8 @@ public class FilmController {
 
     @GetMapping("/search")
     @Operation(summary = "Найти фильм")
-    public List<Film> searchFilms (@RequestParam(name = "name", required = false) String name,
-                                   @RequestParam(name = "genres", required = false) Set<Genre> genres) {
+    public List<Film> searchFilms (@RequestParam(name = "name", required = false) @Parameter(example = "Война миров") String name,
+                                   @RequestParam(name = "genres", required = false) @Parameter(example = "COMEDY") Set<Genre> genres) {
         return filmService.findByNameAndGenre(name, genres);
     }
 }

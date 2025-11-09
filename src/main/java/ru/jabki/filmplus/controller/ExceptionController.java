@@ -12,11 +12,15 @@ public class ExceptionController {
 
     @ExceptionHandler(UserException.class)
     public ResponseEntity<ApiError> handleUserError(final UserException exception) {
-        return ResponseEntity.badRequest().body(new ApiError(false, exception.getMessage()));
+        return ResponseEntity
+                .badRequest()
+                .body(new ApiError(false, exception.getMessage()));
     }
 
     @ExceptionHandler(FilmException.class)
     public ResponseEntity<ApiError> handleFilmError(final FilmException exception) {
-        return ResponseEntity.badRequest().body(new ApiError(false, exception.getMessage()));
+        return ResponseEntity
+                .badRequest()
+                .body(new ApiError(false, exception.getMessage()));
     }
 }
