@@ -1,42 +1,38 @@
 package ru.jabki.filmplus.service;
 
+import lombok.AllArgsConstructor;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 import org.springframework.stereotype.Service;
 import ru.jabki.filmplus.exception.UserException;
 import ru.jabki.filmplus.model.User;
-
-import java.util.HashSet;
+import ru.jabki.filmplus.repository.UserRepository;
 
 @Service
+@AllArgsConstructor
 public class UserService {
-    private static final HashSet<User> users = new HashSet<>();
+    private final UserRepository userRepository;
 
+    @Transactional(rollbackFor = Exception.class)
     public User create(final User user) {
         validate(user);
-        user.setId(users.size() + 1);
-        users.add(user);
-        return user;
+        return userRepository.insert(user);
     }
 
+    @Transactional(readOnly = true)
     public User getUserById(final Long id) {
-        return users.stream()
-                .filter(u -> u.getId() == id)
-                .findFirst()
-                .orElseThrow(() -> new UserException("User not found"));
+        return userRepository.findById(id);
     }
 
+    @Transactional(rollbackFor = Exception.class)
     public User update(final User user) {
         validate(user);
-        final User existUser = getUserById(user.getId());
-        existUser.setLogin(user.getLogin());
-        existUser.setName(user.getName());
-        existUser.setEmail(user.getEmail());
-        existUser.setBirthday(user.getBirthday());
-        return user;
+        return userRepository.update(user);
     }
 
+    @Transactional(rollbackFor = Exception.class)
     public void delete(long id){
-        users.remove(getUserById(id));
+        userRepository.delete(id);
     }
 
     private void validate(final User user) {

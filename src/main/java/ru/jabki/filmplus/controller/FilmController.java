@@ -3,6 +3,7 @@ package ru.jabki.filmplus.controller;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
@@ -22,13 +23,10 @@ import java.util.Set;
 
 @RestController
 @RequestMapping("api/v1/film")
+@AllArgsConstructor
 @Tag(name = "Фильм")
 public class FilmController {
     private final FilmService filmService;
-
-    public FilmController(FilmService filmService) {
-        this.filmService = filmService;
-    }
 
     @PostMapping
     @Operation(summary = "Создать фильм")

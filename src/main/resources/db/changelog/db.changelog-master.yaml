@@ -1,0 +1,7 @@
+databaseChangelog:
+  - include:
+      file: db/changelog/20251811_1040_init_user_table.sql
+  - include:
+      file: 20251911_0000_refactored_user_film_table.sql
+databaseChangeLog:
+  - 
