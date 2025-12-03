@@ -1,7 +1,15 @@
-databaseChangelog:
+databaseChangeLog:
   - include:
       file: db/changelog/20251811_1040_init_user_table.sql
   - include:
-      file: 20251911_0000_refactored_user_film_table.sql
-databaseChangeLog:
-  - 
+      file: db/changelog/20251911_0000_refactored_user_film_table.sql
+  - include:
+      file: db/changelog/20252611_2000_friendship_table.sql
+  - include:
+      file: db/changelog/20252711_0000_friendship_table_altered.sql
+  - include:
+      file: db/changelog/20253011_1440_init_like_table.sql
+  - include:
+      file: db/changelog/20253011_1540_edit_like_table.sql
+  - include:
+      file: db/changelog/20253011_1640_init_review_table.sql

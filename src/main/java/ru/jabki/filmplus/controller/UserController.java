@@ -35,7 +35,7 @@ public class UserController {
 
     @PutMapping("/{id}")
     @Operation(summary = "Обновить пользователя")
-    public User update (@RequestBody final User user) {
+    public User update(@RequestBody final User user) {
         return userService.update(user);
     }
 

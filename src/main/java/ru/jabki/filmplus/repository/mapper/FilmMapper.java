@@ -22,15 +22,16 @@ public class FilmMapper implements RowMapper<Film> {
         Set<Genre> genres = pgArray == null
                 ? Set.of()
                 : Arrays.stream((String[]) pgArray.getArray())
-                .map(Genre::valueOf)
-                .collect(Collectors.toSet());
+                        .map(Genre::valueOf)
+                        .collect(Collectors.toSet());
 
         return Film
                 .builder()
                 .id(rs.getLong("id"))
                 .name(rs.getString("name"))
                 .description(rs.getString("description"))
-                .release(rs.getDate("release").toLocalDate())
+                .release(rs.getDate("release")
+                           .toLocalDate())
                 .duration(rs.getLong("duration"))
                 .genres(genres)
                 .build();

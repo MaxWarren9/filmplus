@@ -8,11 +8,11 @@ import java.time.LocalDate;
 
 @Data
 @Builder
-public class User {
+public class Like {
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     private long id;
-    private String login;
-    private String name;
-    private String email;
-    private LocalDate birthday;
+    private long userId;
+    private long filmId;
+    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
+    private LocalDate createdAt;
 }

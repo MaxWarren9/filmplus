@@ -13,10 +13,10 @@ import ru.jabki.filmplus.repository.mapper.UserMapper;
 public class UserRepository {
 
     private static final String INSERT = """
-        INSERT INTO filmplus.user(login, name, email, birthday)
-        VALUES (:login, :name, :email, :birthday)
-        RETURNING *;
-    """;
+                INSERT INTO filmplus.user(login, name, email, birthday)
+                VALUES (:login, :name, :email, :birthday)
+                RETURNING *;
+            """;
 
     private static final String UPDATE = """
             UPDATE filmplus.user
@@ -37,12 +37,13 @@ public class UserRepository {
 
     private final UserMapper userMapper;
     private NamedParameterJdbcTemplate jdbcTemplate;
+
     public User insert(final User user) {
         return jdbcTemplate.queryForObject(INSERT, userToSql(user), userMapper);
     }
 
-    public User update (final User user) {
-        return jdbcTemplate.queryForObject(UPDATE,userToSql(user), userMapper);
+    public User update(final User user) {
+        return jdbcTemplate.queryForObject(UPDATE, userToSql(user), userMapper);
     }
 
     public void delete(final long id) {

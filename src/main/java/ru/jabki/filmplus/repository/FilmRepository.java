@@ -50,7 +50,7 @@ public class FilmRepository {
         return jdbcTemplate.queryForObject(INSERT, filmToSql(film), filmMapper);
     }
 
-    public Film update (final Film film) {
+    public Film update(final Film film) {
         return jdbcTemplate.queryForObject(UPDATE, filmToSql(film), filmMapper);
     }
 
@@ -83,9 +83,10 @@ public class FilmRepository {
         params.addValue("duration", film.getDuration());
         params.addValue(
                 "genres",
-                film.getGenres().stream()
-                        .map(Enum::name)
-                        .toArray(String[]::new)
+                film.getGenres()
+                    .stream()
+                    .map(Enum::name)
+                    .toArray(String[]::new)
         );
         return params;
     }

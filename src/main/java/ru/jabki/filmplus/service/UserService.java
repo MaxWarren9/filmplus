@@ -1,9 +1,9 @@
 package ru.jabki.filmplus.service;
 
 import lombok.AllArgsConstructor;
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
-import org.springframework.stereotype.Service;
 import ru.jabki.filmplus.exception.UserException;
 import ru.jabki.filmplus.model.User;
 import ru.jabki.filmplus.repository.UserRepository;
@@ -31,29 +31,29 @@ public class UserService {
     }
 
     @Transactional(rollbackFor = Exception.class)
-    public void delete(long id){
+    public void delete(long id) {
         userRepository.delete(id);
     }
 
     private void validate(final User user) {
         if (user == null) {
-            throw new UserException("User is null");
+            throw new UserException("User не заполнен");
         }
 
         if (!StringUtils.hasText(user.getName())) {
-            throw new UserException("User name is empty");
+            throw new UserException("Имя пользователя не заполнено");
         }
 
         if (!StringUtils.hasText(user.getEmail())) {
-            throw new UserException("User mail is empty");
+            throw new UserException("Почта пользователя не заполнена");
         }
 
         if (!StringUtils.hasText(user.getLogin())) {
-            throw new UserException("User login is empty");
+            throw new UserException("Логин пользователя не заполнен");
         }
 
         if (user.getBirthday() == null) {
-            throw new UserException("User birthday not found");
+            throw new UserException("День рождения пользователя не заполнен");
         }
     }
 }

@@ -33,6 +33,7 @@ public class FilmService {
         validate(film);
         return filmRepository.update(film);
     }
+
     @Transactional(rollbackFor = Exception.class)
     public void delete(long id) {
         filmRepository.delete(id);
@@ -40,10 +41,15 @@ public class FilmService {
 
     @Transactional(readOnly = true)
     public List<Film> findByNameAndGenre(String name, Set<Genre> genres) {
-        return filmRepository.findAll().stream()
-                .filter(film -> (name == null || name.isBlank() || film.getName().toLowerCase().contains(name)))
-                .filter(film -> (genres == null || film.getGenres().stream().anyMatch(genres :: contains)))
-                .toList();
+        return filmRepository.findAll()
+                             .stream()
+                             .filter(film -> (name == null || name.isBlank() || film.getName()
+                                                                                    .toLowerCase()
+                                                                                    .contains(name)))
+                             .filter(film -> (genres == null || film.getGenres()
+                                                                    .stream()
+                                                                    .anyMatch(genres::contains)))
+                             .toList();
     }
 
     private void validate(final Film film) {
@@ -62,7 +68,8 @@ public class FilmService {
         if (film.getRelease() == null) {
             throw new FilmException("Film release date is null");
         }
-        if (film.getGenres().isEmpty()) {
+        if (film.getGenres()
+                .isEmpty()) {
             throw new FilmException("Film genres are empty");
         }
     }

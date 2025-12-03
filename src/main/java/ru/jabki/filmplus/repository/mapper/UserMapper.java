@@ -3,6 +3,7 @@ package ru.jabki.filmplus.repository.mapper;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Component;
 import ru.jabki.filmplus.model.User;
+
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
@@ -17,7 +18,8 @@ public class UserMapper implements RowMapper<User> {
                 .login(rs.getString("login"))
                 .name(rs.getString("name"))
                 .email(rs.getString("email"))
-                .birthday(rs.getDate("birthday").toLocalDate())
+                .birthday(rs.getDate("birthday")
+                            .toLocalDate())
                 .build();
     }
 }

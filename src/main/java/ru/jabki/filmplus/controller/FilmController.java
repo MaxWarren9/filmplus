@@ -6,7 +6,6 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -42,20 +41,20 @@ public class FilmController {
 
     @PutMapping("/{id}")
     @Operation(summary = "Обновить фильм")
-    public Film update (@RequestBody final Film film) {
+    public Film update(@RequestBody final Film film) {
         return filmService.update(film);
     }
 
     @DeleteMapping("/{id}")
     @Operation(summary = "Удалить фильм")
-    public void delete(@PathVariable("id") long id){
+    public void delete(@PathVariable("id") long id) {
         filmService.delete(id);
     }
 
     @GetMapping("/search")
     @Operation(summary = "Найти фильм")
-    public List<Film> searchFilms (@RequestParam(name = "name", required = false) @Parameter(example = "Война миров") String name,
-                                   @RequestParam(name = "genres", required = false) @Parameter(example = "COMEDY") Set<Genre> genres) {
+    public List<Film> searchFilms(@RequestParam(name = "name", required = false) @Parameter(example = "Война миров") String name,
+                                  @RequestParam(name = "genres", required = false) @Parameter(example = "COMEDY") Set<Genre> genres) {
         return filmService.findByNameAndGenre(name, genres);
     }
 }
