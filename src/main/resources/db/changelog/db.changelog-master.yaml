@@ -1,15 +1,82 @@
 databaseChangeLog:
-  - include:
-      file: db/changelog/20251811_1040_init_user_table.sql
-  - include:
-      file: db/changelog/20251911_0000_refactored_user_film_table.sql
-  - include:
-      file: db/changelog/20252611_2000_friendship_table.sql
-  - include:
-      file: db/changelog/20252711_0000_friendship_table_altered.sql
-  - include:
-      file: db/changelog/20253011_1440_init_like_table.sql
-  - include:
-      file: db/changelog/20253011_1540_edit_like_table.sql
-  - include:
-      file: db/changelog/20253011_1640_init_review_table.sql
+
+  - changeSet:
+      id: create-schema-filmplus
+      author: max
+      changes:
+        - sql:
+            sql: |
+              CREATE SCHEMA IF NOT EXISTS filmplus;
+
+  - changeSet:
+      id: create-user-table
+      author: max
+      changes:
+        - sql:
+            sql: |
+              CREATE TABLE IF NOT EXISTS filmplus."user" (
+                id SERIAL PRIMARY KEY,
+                login VARCHAR NOT NULL,
+                name VARCHAR NOT NULL,
+                email VARCHAR UNIQUE NOT NULL,
+                birthday DATE
+              );
+
+  - changeSet:
+      id: create-film-table
+      author: max
+      changes:
+        - sql:
+            sql: |
+              CREATE TABLE IF NOT EXISTS filmplus.film (
+                id SERIAL PRIMARY KEY,
+                name VARCHAR NOT NULL,
+                description VARCHAR NOT NULL,
+                release DATE NOT NULL,
+                duration BIGINT NOT NULL,
+                genres VARCHAR NOT NULL
+              );
+
+  - changeSet:
+      id: create-friendship-table
+      author: max
+      changes:
+        - sql:
+            sql: |
+              CREATE TABLE IF NOT EXISTS filmplus.friendship (
+                id SERIAL PRIMARY KEY,
+                user_id BIGINT NOT NULL REFERENCES filmplus."user"(id),
+                friend_id BIGINT NOT NULL REFERENCES filmplus."user"(id),
+                status VARCHAR NOT NULL,
+                created TIMESTAMP NOT NULL,
+                updated DATE
+              );
+
+  - changeSet:
+      id: create-like-table
+      author: max
+      changes:
+        - sql:
+            sql: |
+              CREATE TABLE IF NOT EXISTS filmplus."like" (
+                id SERIAL PRIMARY KEY,
+                user_id BIGINT NOT NULL REFERENCES filmplus."user"(id),
+                film_id BIGINT NOT NULL REFERENCES filmplus.film(id),
+                created_at TIMESTAMP NOT NULL
+              );
+
+  - changeSet:
+      id: create-review-table
+      author: max
+      changes:
+        - sql:
+            sql: |
+              CREATE TABLE IF NOT EXISTS filmplus.review (
+                id SERIAL PRIMARY KEY,
+                user_id BIGINT NOT NULL REFERENCES filmplus."user"(id),
+                film_id BIGINT NOT NULL REFERENCES filmplus.film(id),
+                rate BIGINT NOT NULL CHECK (rate IN (1,2,3,4,5)),
+                review VARCHAR(255) NOT NULL UNIQUE,
+                created_at TIMESTAMP NOT NULL,
+                updated_at DATE
+              );
