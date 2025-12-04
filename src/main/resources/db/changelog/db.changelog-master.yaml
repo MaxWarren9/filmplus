@@ -34,7 +34,7 @@ databaseChangeLog:
                 description VARCHAR NOT NULL,
                 release DATE NOT NULL,
                 duration BIGINT NOT NULL,
-                genres VARCHAR NOT NULL
+                genre VARCHAR NOT NULL
               );
 
   - changeSet:

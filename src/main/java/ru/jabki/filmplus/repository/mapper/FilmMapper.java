@@ -17,13 +17,6 @@ public class FilmMapper implements RowMapper<Film> {
 
     @Override
     public Film mapRow(ResultSet rs, int rowNum) throws SQLException {
-        Array pgArray = rs.getArray("genres");
-
-        Set<Genre> genres = pgArray == null
-                ? Set.of()
-                : Arrays.stream((String[]) pgArray.getArray())
-                        .map(Genre::valueOf)
-                        .collect(Collectors.toSet());
 
         return Film
                 .builder()
@@ -33,7 +26,7 @@ public class FilmMapper implements RowMapper<Film> {
                 .release(rs.getDate("release")
                            .toLocalDate())
                 .duration(rs.getLong("duration"))
-                .genres(genres)
+                .genre(Genre.valueOf(rs.getString("genre")))
                 .build();
     }
 }

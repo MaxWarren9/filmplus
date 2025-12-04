@@ -15,14 +15,14 @@ import java.util.List;
 public class FilmRepository {
 
     private static final String INSERT = """
-            INSERT INTO filmplus.film(name, description, duration, release, genres)
-            VALUES (:name, :description, :duration, :release, :genres)
+            INSERT INTO filmplus.film(name, description, duration, release, genre)
+            VALUES (:name, :description, :duration, :release, :genre)
             RETURNING *;
             """;
 
     private static final String UPDATE = """
             UPDATE filmplus.film
-            SET name = :name, description = :description, duration = :duration, release = :release, genres = :genres
+            SET name = :name, description = :description, duration = :duration, release = :release, genre = :genre
             WHERE id = :id
             RETURNING *;
             """;
@@ -81,13 +81,7 @@ public class FilmRepository {
         params.addValue("description", film.getDescription());
         params.addValue("release", film.getRelease());
         params.addValue("duration", film.getDuration());
-        params.addValue(
-                "genres",
-                film.getGenres()
-                    .stream()
-                    .map(Enum::name)
-                    .toArray(String[]::new)
-        );
+        params.addValue("genre", film.getGenre().name());
         return params;
     }
 }

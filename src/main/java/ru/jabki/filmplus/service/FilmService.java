@@ -40,15 +40,13 @@ public class FilmService {
     }
 
     @Transactional(readOnly = true)
-    public List<Film> findByNameAndGenre(String name, Set<Genre> genres) {
+    public List<Film> findByNameAndGenre(String name, Genre genre) {
         return filmRepository.findAll()
                              .stream()
                              .filter(film -> (name == null || name.isBlank() || film.getName()
                                                                                     .toLowerCase()
                                                                                     .contains(name)))
-                             .filter(film -> (genres == null || film.getGenres()
-                                                                    .stream()
-                                                                    .anyMatch(genres::contains)))
+                             .filter(f -> genre == null || f.getGenre() == genre)
                              .toList();
     }
 
@@ -68,9 +66,8 @@ public class FilmService {
         if (film.getRelease() == null) {
             throw new FilmException("Film release date is null");
         }
-        if (film.getGenres()
-                .isEmpty()) {
-            throw new FilmException("Film genres are empty");
+        if (film.getGenre() == null) {
+            throw new FilmException("Film genre is empty");
         }
     }
 }

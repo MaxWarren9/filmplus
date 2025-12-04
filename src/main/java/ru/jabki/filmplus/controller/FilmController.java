@@ -18,7 +18,6 @@ import ru.jabki.filmplus.model.Film;
 import ru.jabki.filmplus.service.FilmService;
 
 import java.util.List;
-import java.util.Set;
 
 @RestController
 @RequestMapping("api/v1/film")
@@ -54,7 +53,7 @@ public class FilmController {
     @GetMapping("/search")
     @Operation(summary = "Найти фильм")
     public List<Film> searchFilms(@RequestParam(name = "name", required = false) @Parameter(example = "Война миров") String name,
-                                  @RequestParam(name = "genres", required = false) @Parameter(example = "COMEDY") Set<Genre> genres) {
-        return filmService.findByNameAndGenre(name, genres);
+                                  @RequestParam(name = "genre", required = false) @Parameter(example = "COMEDY") Genre genre) {
+        return filmService.findByNameAndGenre(name, genre);
     }
 }
