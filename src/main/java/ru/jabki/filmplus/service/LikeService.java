@@ -55,9 +55,7 @@ public class LikeService {
         if (like == null) {
             throw new BadRequestException("Данные лайка не заполнены");
         }
-        if (like.getId() <= 0) {
-            throw new BadRequestException("Некорректно заданы параметры id лайка");
-        }
+
         if (like.getUserId() <= 0) {
             throw new BadRequestException("Некорректно заданы параметры id пользователя");
         }
